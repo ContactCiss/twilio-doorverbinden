@@ -1,24 +1,19 @@
-from flask import Flask, request, Response, redirect
-from twilio.twiml.voice_response import VoiceResponse, Dial, Say
-import os
+from flask import Flask, request, Response
+from twilio.twiml.voice_response import VoiceResponse, Dial
 
 app = Flask(__name__)
 
-@app.route("/start", methods=["POST"])
-def start_call():
-    # Vereenvoudigde versie zonder ElevenLabs API-aanroep
-    response = VoiceResponse()
-    response.say("Verbinding wordt gemaakt met een AI-assistent.", language='nl-NL')
-    # Hier zou je je eigen werkende AI WebSocket setup koppelen
-    return Response(str(response), mimetype='text/xml')
-
 @app.route("/doorverbinden", methods=["POST"])
 def doorverbinden():
-    # Deze route wordt aangeroepen als AI zegt dat er moet worden doorverbonden
     response = VoiceResponse()
+    # Dit bericht moet aan de beller worden verteld
     response.say("Een ogenblikje, ik verbind u nu door naar een medewerker.", language='nl-NL')
-    response.dial("0031884114114", caller_id="+31907010252180")
+    
+    # Het daadwerkelijke doorverbinden naar het juiste nummer
+    response.dial("0031884114114", caller_id="+3197010252180")  # Twilio-nummer als caller_id
     return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
+
+print(f"POST-request ontvangen: {request.json}")
