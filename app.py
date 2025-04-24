@@ -7,7 +7,7 @@ app = Flask(__name__)
 def doorverbinden():
     response = VoiceResponse()
     response.say("Een ogenblikje, ik verbind u nu door naar een medewerker.", language='nl-NL')
-    response.dial("+318841144114", caller_id="+31907010252180")
+    response.dial("0031884114114", caller_id="+31907010252180")
     return Response(str(response), mimetype='text/xml')
 
 if __name__ == "__main__":
